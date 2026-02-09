@@ -57,264 +57,22 @@
 
         const { useState, useEffect, useMemo } = React;
 
-        // --- DADOS ---
-        const VAGAS_DATA = [
-            { cidade: "Não irei escolher", vagas: 9999 },
-            { cidade: "Porto Alegre", vagas: 36 }, { cidade: "São Leopoldo", vagas: 15 },
-            { cidade: "Triunfo", vagas: 3 }, { cidade: "Dois Irmãos", vagas: 1 },
-            { cidade: "Portão", vagas: 2 }, { cidade: "Novo Hamburgo", vagas: 3 },
-            { cidade: "Pelotas", vagas: 6 }, { cidade: "Rio Grande", vagas: 5 },
-            { cidade: "Santa Vitória do Palmar", vagas: 2 }, { cidade: "Santa Maria", vagas: 17 },
-            { cidade: "Júlio de Castilhos", vagas: 3 }, { cidade: "Caçapava do Sul", vagas: 3 },
-            { cidade: "São Sepé", vagas: 1 }, { cidade: "Caxias do Sul", vagas: 22 },
-            { cidade: "São Marcos", vagas: 1 }, { cidade: "Taquara", vagas: 2 },
-            { cidade: "Veranópolis", vagas: 2 }, { cidade: "Lagoa Vermelha", vagas: 1 },
-            { cidade: "Vacaria", vagas: 2 }, { cidade: "Gramado", vagas: 2 },
-            { cidade: "Bento Gonçalves", vagas: 1 }, { cidade: "Guaíba", vagas: 1 },
-            { cidade: "Rio Pardo", vagas: 1 }, { cidade: "São Lourenço do Sul", vagas: 2 },
-            { cidade: "São Jerônimo", vagas: 1 }, { cidade: "Camaquã", vagas: 1 },
-            { cidade: "Vera Cruz", vagas: 1 }, { cidade: "Venâncio Aires", vagas: 1 },
-            { cidade: "Passo Fundo", vagas: 12 }, { cidade: "Guaporé", vagas: 2 },
-            { cidade: "Erechim", vagas: 8 }, { cidade: "Nonoai", vagas: 1 },
-            { cidade: "Soledade", vagas: 1 }, { cidade: "Getúlio Vargas", vagas: 2 },
-            { cidade: "Carazinho", vagas: 3 }, { cidade: "Tapera", vagas: 2 },
-            { cidade: "Sarandi", vagas: 3 }, { cidade: "Canoas", vagas: 9 },
-            { cidade: "Viamão", vagas: 1 }, { cidade: "Alvorada", vagas: 1 },
-            { cidade: "Tramandaí", vagas: 5 }, { cidade: "Capão da Canoa", vagas: 1 },
-            { cidade: "Terra de Areia", vagas: 1 }, { cidade: "Santana do Livramento", vagas: 3 },
-            { cidade: "Quaraí", vagas: 1 }, { cidade: "Dom Pedrito", vagas: 1 },
-            { cidade: "Bagé", vagas: 1 }, { cidade: "Ibirubá", vagas: 1 },
-            { cidade: "Palmeira das Missões", vagas: 1 }, { cidade: "Frederico Westphalen", vagas: 2 },
-            { cidade: "Uruguaiana", vagas: 2 }, { cidade: "Barra do Quaraí", vagas: 1 },
-            { cidade: "Santiago", vagas: 2 }
-        ];
+        // --- NOVOS DADOS EXTRAÍDOS DO ARQUIVO "VAGAS 1 sgt.xlsx" ---
+        const VAGAS_DATA = [{"cidade": "Não irei escolher", "vagas": 9999}, {"cidade": "Porto Alegre", "vagas": 14}, {"cidade": "Novo Hamburgo", "vagas": 1}, {"cidade": "Montenegro", "vagas": 1}, {"cidade": "Triunfo", "vagas": 2}, {"cidade": "Estância Velha", "vagas": 1}, {"cidade": "Rio Grande", "vagas": 1}, {"cidade": "Santa Vitória do Palmar", "vagas": 1}, {"cidade": "Santa Maria", "vagas": 2}, {"cidade": "Cachoeira do Sul", "vagas": 1}, {"cidade": "São Pedro do Sul", "vagas": 1}, {"cidade": "Caxias do Sul", "vagas": 6}, {"cidade": "Lagoa Vermelha", "vagas": 1}, {"cidade": "Canela", "vagas": 1}, {"cidade": "Lajeado", "vagas": 1}, {"cidade": "Rio Pardo", "vagas": 1}, {"cidade": "Santa Cruz do Sul", "vagas": 1}, {"cidade": "São Lourenço do Sul", "vagas": 1}, {"cidade": "Taquari", "vagas": 2}, {"cidade": "Encruzilhada do Sul", "vagas": 1}, {"cidade": "Camaquã", "vagas": 1}, {"cidade": "Venâncio Aires", "vagas": 1}, {"cidade": "Passo Fundo", "vagas": 2}, {"cidade": "Soledade", "vagas": 2}, {"cidade": "Getúlio Vargas", "vagas": 1}, {"cidade": "Tapera", "vagas": 1}, {"cidade": "Nonoai", "vagas": 1}, {"cidade": "Canoas", "vagas": 1}, {"cidade": "Gravataí", "vagas": 1}, {"cidade": "Alvorada", "vagas": 1}, {"cidade": "Viamão", "vagas": 2}, {"cidade": "Tramandaí", "vagas": 1}, {"cidade": "Osório", "vagas": 1}, {"cidade": "Balneário Pinhal", "vagas": 1}, {"cidade": "Santana do Livramento", "vagas": 2}, {"cidade": "Dom Pedrito", "vagas": 1}, {"cidade": "Rosário do Sul", "vagas": 1}, {"cidade": "Três de Maio", "vagas": 1}, {"cidade": "Panambi", "vagas": 1}, {"cidade": "Cruz Alta", "vagas": 1}, {"cidade": "São Borja", "vagas": 1}, {"cidade": "Itaqui", "vagas": 1}];
 
-        const SARGENTOS_DATA = [
-            { id: "2877953", nome: "EDGAR DA SILVA GODINHO", ant: 307, lotacao: "2º CRBM-5° BBM - Vacaria" },
-            { id: "2910233", nome: "VINICIUS MACHADO DE MORAES", ant: 310, lotacao: "4° CRBM-6° BBM - São Lourenço do Sul" },
-            { id: "2919192", nome: "ROSEANE VERA MILITZ CARVALHO", ant: 311, lotacao: "2º CRBM-7º BBM - Passo Fundo" },
-            { id: "2911400", nome: "FRANCISCO DELMAR LANZ JUNIOR", ant: 313, lotacao: "2º CRBM-2º BBM - Parobé" },
-            { id: "2919060", nome: "EDUARDO DA ROSA MARTINS", ant: 316, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "2918960", nome: "ADRIANO ALMEIDA LARRONDO", ant: 321, lotacao: "4° CRBM-4° BBM Cachoeira do Sul" },
-            { id: "2919150", nome: "MOISÉS SANTOS DA SILVA", ant: 324, lotacao: "3º CRBM-3º BBM - Rio Grande" },
-            { id: "2910527", nome: "LUIS FERNANDO BARRAGAN FERREIRA", ant: 325, lotacao: "3º CRBM-3º BBM - Canguçu" },
-            { id: "2919249", nome: "JOSE ADAO DIAS NEVES", ant: 326, lotacao: "3º CRBM-10° BBM - Quaraí" },
-            { id: "2915650", nome: "JEAN DE FREITAS NUNES", ant: 330, lotacao: "3º CRBM-13º BBM - São Borja" },
-            { id: "2918650", nome: "FLAVIO HEINRICH", ant: 331, lotacao: "4° CRBM-6° BBM Santa Cruz do Sul" },
-            { id: "2914077", nome: "MAURO CESAR BATISTA BUENO", ant: 332, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "2915804", nome: "LEANDRO DOS SANTOS ESPÍNDULA", ant: 333, lotacao: "1º CRBM-9º BBM - Osório" },
-            { id: "2917947", nome: "FRANCKLIN DOUGLAS RIBEIRO DO AMARAL", ant: 334, lotacao: "1º CRBM-9º BBM - Osório" },
-            { id: "2919478", nome: "FAUSTO FARIAS DOS SANTOS", ant: 335, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "2919346", nome: "FRANCIONE BECKER", ant: 336, lotacao: "4º CRBM-11° BBM - Santo Ângelo" },
-            { id: "2969939", nome: "DAIR GUTOWSKI", ant: 337, lotacao: "2º CRBM-7° BBM - Erechim" },
-            { id: "2968614", nome: "PAULO VAGNER PERUZZI AZOLIN", ant: 338, lotacao: "4° CRBM-11º BBM - São Luiz Gonzaga" },
-            { id: "2970414", nome: "JOÃO MARCOS PETERSEN OLIVEIRA", ant: 343, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "2969424", nome: "ADRIANO IENSEN PENDEZA", ant: 345, lotacao: "4° CRBM-4° BBM Santa Maria" },
-            { id: "2788403", nome: "DANIEL LIMA LAGEMANN", ant: 346, lotacao: "4º CRBM-4° BBM - Restinga Sêca" },
-            { id: "2973588", nome: "MAIQUER PERES COUTO", ant: 347, lotacao: "3º CRBM-10° BBM - Bagé" },
-            { id: "2968410", nome: "ALAN DIONES DA SILVA PAIM", ant: 348, lotacao: "2º CRBM-5° BBM - Vacaria" },
-            { id: "2969580", nome: "JOAO CARLOS SILVA CARPES", ant: 349, lotacao: "3º CRBM-13º BBM - São Borja" },
-            { id: "2969912", nome: "DENER LEMOS CORREA", ant: 350, lotacao: "3º CRBM-10° BBM - Dom Pedrito" },
-            { id: "2969289", nome: "VANDER VIEIRA RODRIGUES", ant: 351, lotacao: "2º CRBM-5º BBM - Farroupilha" },
-            { id: "2974223", nome: "CESAR MALET RODRIGUES", ant: 352, lotacao: "1º CRBM-9° BBM - Santo Antônio da Patrulha" },
-            { id: "2969459", nome: "ANDRE STRINGHI MARQUES", ant: 354, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "2973871", nome: "ELISETE DE FATIMA DORNELES ANTUNES", ant: 355, lotacao: "1º CRBM-9° BBM - Tramandaí" },
-            { id: "2857170", nome: "ANDERSON DE OLIVEIRA PEREIRA", ant: 356, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "2971577", nome: "JULIANO BARREIRO QUIRINO", ant: 358, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "2968258", nome: "ODAIR DOS SANTOS DORNELLES", ant: 359, lotacao: "2º CRBM-2º BBM - Sapiranga" },
-            { id: "2972794", nome: "EMERSON ALVES GOMES", ant: 360, lotacao: "3º CRBM-3º BBM - São José do Norte" },
-            { id: "2973278", nome: "EBERSON CORREA DA SILVA", ant: 362, lotacao: "1º CRBM-9° BBM - Capão da Canoa" },
-            { id: "2971763", nome: "ROBERTO JOSE PIREZ EPIFANIO FILHO", ant: 363, lotacao: "4º CRBM-6° BBM - Lajeado" },
-            { id: "2916797", nome: "DIEGO DA SILVA", ant: 364, lotacao: "4° CRBM-4° BBM Cachoeira do Sul" },
-            { id: "2992663", nome: "EVANDRO ΑΝΤΟΝΙΟ HENZ", ant: 367, lotacao: "4° CRBM-6° BBM - Estrela" },
-            { id: "2821834", nome: "RODRIGO PIRES DA SILVA", ant: 368, lotacao: "4° CRBM-6° BBM - Estrela" },
-            { id: "2996677", nome: "BERNARDO GOTTWALD", ant: 369, lotacao: "4° CRBM-11º BBM - Três Passos" },
-            { id: "2995808", nome: "TIAGO ARTUR ROHLEDER", ant: 370, lotacao: "2º CRBM-2º BBM - Sapiranga" },
-            { id: "2993775", nome: "JOSE FELIPE DE ASSUMPCAO MARINHO", ant: 371, lotacao: "1º CRBM-9° BBM-Santo Antônio da Patrulha" },
-            { id: "2995506", nome: "SIDNEI SEVERO DA SILVA", ant: 372, lotacao: "4° CRBM-4º BBM Santa Maria" },
-            { id: "2991926", nome: "DERLI DA CRUZ RIOS", ant: 373, lotacao: "4° CRBM-11º BBM - São Luiz Gonzaga" },
-            { id: "2992825", nome: "ALESSANDRO SOARES CASTRO", ant: 374, lotacao: "4° CRBM-6° BBM-Guaíba" },
-            { id: "2786958", nome: "ARMANDO FREITAS SALDANHA", ant: 375, lotacao: "4° CRBM-4º BBM Santa Maria" },
-            { id: "2825732", nome: "MARCOS DE PAULA CAMARGO", ant: 378, lotacao: "4° CRBM-11º BBM Santa Rosa" },
-            { id: "2991322", nome: "AURELIO JUAREZ RODRIGUES", ant: 380, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "2995093", nome: "ROBERSON PERES CABRAL", ant: 381, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "2995840", nome: "VANISE SCHNEIDER", ant: 382, lotacao: "4° CRBM-11º BBM - Três de Maio" },
-            { id: "2993872", nome: "JUNIOR MARQUES DE MARQUES", ant: 384, lotacao: "4° CRBM-4° BBM - Caçapava do Sul" },
-            { id: "2992930", nome: "CRISTIANO WILLIAM SOUZA", ant: 388, lotacao: "2º CRBM-7º BBM - Passo Fundo" },
-            { id: "2993112", nome: "DIENESON TOLDO DE BARROS", ant: 390, lotacao: "2º CRBM-7º BBM - Passo Fundo" },
-            { id: "2994291", nome: "MARIA MEDIANEIRA DOS SANTOS", ant: 391, lotacao: "4° CRBM-6° BBM - Vera Cruz" },
-            { id: "2994305", nome: "MAICON MULLER SCHMITT", ant: 393, lotacao: "4° CRBM-4º BBM-Santa Maria" },
-            { id: "2993430", nome: "JONY CAZAUBON DA SILVA", ant: 394, lotacao: "2º CRBM-5° BBM Bento Gonçalves" },
-            { id: "2994976", nome: "RAFAEL RELINGUE RODRIGUES", ant: 395, lotacao: "3º CRBM-10° BBM Dom Pedrito" },
-            { id: "2993945", nome: "JAKSON RODRIGO MELO", ant: 396, lotacao: "2º CRBM-7° BBM - Soledade" },
-            { id: "2994364", nome: "MARNEN CABREIRA DE SOUZA", ant: 398, lotacao: "3º CRBM-3º BBM Santa Vitória do Palmar" },
-            { id: "2994500", nome: "LEANDRO TEIXEIRA NUNES", ant: 399, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "3058417", nome: "JUARES ROBERTO KAISEKAMP", ant: 400, lotacao: "1º CRBM-8° BBM - Sapucaia do Sul" },
-            { id: "2993651", nome: "JULIO FRANCISCO HAITO", ant: 401, lotacao: "2º CRBM-5° BBM Caxias do Sul" },
-            { id: "2993848", nome: "JOHNATHAN RAMON SANTOS PEREIRA", ant: 402, lotacao: "4° CRBM-6° BBM - Lajeado" },
-            { id: "2784947", nome: "ELISANDRO STELLO ZIEGLER", ant: 403, lotacao: "4° CRBM-4º BBM Santa Maria" },
-            { id: "2856425", nome: "PAULO ANTONIO RODRIGUES DOS SANTOS JUNIOR", ant: 404, lotacao: "2º CRBM-5° BBM Caxias do Sul" },
-            { id: "2993961", nome: "LUCIANO DIAS KULMANN", ant: 407, lotacao: "3º CRBM-13º BBM - Itaqui" },
-            { id: "2994640", nome: "MARIANE PIRES MOLINA", ant: 408, lotacao: "3º CRBM-10º BBM - São Gabriel" },
-            { id: "3144941", nome: "LEANDRO NUNES SAIKOSKI", ant: 412, lotacao: "1º CRBM-9° BBM Santo Antônio da Patrulha" },
-            { id: "3155048", nome: "JONATAN HARTMANN", ant: 413, lotacao: "2º CRBM-5° BBM - Farroupilha" },
-            { id: "3144054", nome: "GELLIARD LINHAR DE SOUZA", ant: 417, lotacao: "3º CRBM-3º BBM - São José do Norte" },
-            { id: "3135780", nome: "JEISON JAIR RODRIGUES SCALCON", ant: 418, lotacao: "3º CRBM-10° BBM-Rosário do Sul" },
-            { id: "2870720", nome: "CRISTIAN DE LIMA FRANCO", ant: 419, lotacao: "1º CRBM-EM - Porto Alegre" },
-            { id: "3153525", nome: "IGOR LEMOES XAVIER", ant: 422, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "3136078", nome: "ROGER RISSON DA SILVA", ant: 423, lotacao: "DA/DTIC - Porto Alegre" },
-            { id: "3154920", nome: "JULIANO ANTONIO CAPA DOS REIS", ant: 424, lotacao: "2º CRBM-2º BBM - Montenegro" },
-            { id: "3147800", nome: "RICARDO PORTO DORNELES", ant: 426, lotacao: "2º CRBM-2º BBM - Ivoti" },
-            { id: "3166619", nome: "BRUNO DA COSTA SILVA MENEZES", ant: 428, lotacao: "2º CRBM-7º BBM - Passo Fundo" },
-            { id: "3161706", nome: "ENO GALITO DA SILVA", ant: 429, lotacao: "3º CRBM-13° BBM - Santiago" },
-            { id: "3152677", nome: "ALEXANDRE SCHIFELBEIN", ant: 432, lotacao: "2º CRBM-5° BBM Bento Gonçalves" },
-            { id: "3152375", nome: "BRUNO BRANDOLT PEDROSO", ant: 433, lotacao: "3º CRBM-13° BBM - Alegrete" },
-            { id: "2871653", nome: "JUNIR SCESNY", ant: 434, lotacao: "2º CRBM-7º BBM - Erechim" },
-            { id: "3147657", nome: "CLEBER ESPINDOLA DA SILVA", ant: 436, lotacao: "1º CRBM-9° BBM - Terra de Areia" },
-            { id: "2956659", nome: "MARCELO NORNBERG BERGMANN", ant: 439, lotacao: "3º CRBM-3º BBM - Pelotas" },
-            { id: "3157113", nome: "LUCIAN ALVES INSAURRIAGA", ant: 440, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "3138054", nome: "AIRTON DA SILVA VIEIRA JUNIOR", ant: 441, lotacao: "1º CRBM-8° BBM - Alvorada" },
-            { id: "2824361", nome: "ROGER DA SILVA BEHLING", ant: 442, lotacao: "3º CRBM-13º BBM - São Borja" },
-            { id: "2959879", nome: "DOUGLAS DOS SANTOS CAVALEIRO", ant: 443, lotacao: "1º CRBM-9º BBM - Capão da Canoa" },
-            { id: "3147576", nome: "MAURICIO CHAVES DOS SANTOS", ant: 451, lotacao: "2º CRBM-2º BBM - Ivoti" },
-            { id: "3164853", nome: "HORIZONTE DE JESUS AGUIRRE JUNIOR", ant: 452, lotacao: "2º CRBM-2° BBM - Parobé" },
-            { id: "3154742", nome: "ISMAEL LAZO DE OLIVEIRA", ant: 453, lotacao: "3º CRBM-3º BBM - Santa Vitória do Palmar" },
-            { id: "2987490", nome: "MAIRON GOULART MOREO", ant: 454, lotacao: "3º CRBM-3º BBM - Jaguarão" },
-            { id: "3153770", nome: "NATALIA DA CRUZ ANGRIZANO PISKE", ant: 456, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "3137058", nome: "RAFAEL STACHACK", ant: 457, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "3135837", nome: "SIDINEI MENDONCA", ant: 458, lotacao: "1º CRBM-9° BBM - Tramandaí" },
-            { id: "3137562", nome: "NERISSON LENHARDT WESZ", ant: 459, lotacao: "2º CRBM-2º BBM - Dois Irmãos" },
-            { id: "2871980", nome: "DELIR ANDRÉ DOS SANTOS PESSOTA", ant: 460, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "3143031", nome: "FERNANDO FEYH", ant: 461, lotacao: "4º CRBM-6° BBM - Estrela" },
-            { id: "2824019", nome: "ACY DA SILVA UMPIERRE NETO", ant: 462, lotacao: "4º CRBM-4° BBM - Caçapava do Sul" },
-            { id: "3165779", nome: "RAFAEL LUCCHESE BORGMANN", ant: 463, lotacao: "4° CRBM-6° BBM-Vera Cruz" },
-            { id: "3146898", nome: "MARCOS APARECIDO DA LUZ", ant: 465, lotacao: "2º CRBM-5° BBM - Farroupilha" },
-            { id: "3158900", nome: "RUDRI ANGELO PETRY DOS SANTOS", ant: 466, lotacao: "1º CRBM-9° BBM Santo Antônio da Patrulha" },
-            { id: "3151581", nome: "VALMIR DA ROSA SARUBA", ant: 467, lotacao: "2º CRBM-5° BBMCaxias do Sul" },
-            { id: "2871017", nome: "ANDRE LUIS VASILUK", ant: 468, lotacao: "2º CRBM-7° BBM - Erechim" },
-            { id: "3695450", nome: "CRISTIAN BAUER DE MORAES", ant: 469, lotacao: "4° CRBM-4° BBM Cachoeira do Sul" },
-            { id: "3697487", nome: "GUILHERME ANDRE OLKOSKI DA SILVA", ant: 470, lotacao: "2º CRBM-2º BBM - Sapiranga" },
-            { id: "3698505", nome: "VANDERLAN MORAIS ANDRADE", ant: 474, lotacao: "3º CRBM-13º BBM - São Borja" },
-            { id: "3696596", nome: "FERNANDO BELGRAVO KOHAUT DA SILVA", ant: 475, lotacao: "2º CRBM-7° BBM Carazinho" },
-            { id: "2985675", nome: "DIEGO ROSA BOTEGA", ant: 476, lotacao: "1º CRBM-1° BBM - Porto Alegre" },
-            { id: "3695719", nome: "PAULO ROBERTO JUNIOR DA SILVA RIBEIRO", ant: 479, lotacao: "3º CRBM-10° BBM - Quaraí" },
-            { id: "3699358", nome: "HUESLEI ALVARENGA BERCHON", ant: 480, lotacao: "2º CRBM-2º BBM - São Leopoldo" },
-            { id: "3694577", nome: "CRISTIANE ELISA BIEGER ANDRADE", ant: 481, lotacao: "4º CRBM-11º BBM - São Luiz Gonzaga" },
-            { id: "3696197", nome: "ELVIS DOS ANJOS SILVA", ant: 483, lotacao: "4° CRBM-4° BBM Santa Maria" },
-            { id: "3203212", nome: "LUCAS BRUM GUEDES", ant: 485, lotacao: "2º CRBM-5° BBM - Gramado" },
-            { id: "3695565", nome: "WILLIAM LICHT DOS SANTOS", ant: 487, lotacao: "1º CRBM-9° BBM - Torres" },
-            { id: "3694810", nome: "FELIPE VARGAS OLIVEIRA", ant: 488, lotacao: "4º CRBM-6° BBM - Santa Cruz do Sul" },
-            { id: "3698530", nome: "RAFAEL LISCANO", ant: 491, lotacao: "3º CRBM-3º BBM - Jaguarão" },
-            { id: "3694607", nome: "VAGNER ANTONIO CARDOSO MEREGALLI", ant: 493, lotacao: "1º CRBM-9° BBM - Cidreira" },
-            { id: "3697479", nome: "CESAR AUGUSTO CHRISTMANN", ant: 495, lotacao: "4º CRBM-6° BBM Santa Cruz do Sul" },
-            { id: "3697908", nome: "JOAO GABRIEL GRANDO GUEDES", ant: 497, lotacao: "2º CRBM-7° BBM Soledade" },
-            { id: "3695433", nome: "MAIKEL NUNES MARQUARDT", ant: 498, lotacao: "4º CRBM-6° BBM Santa Cruz do Sul" },
-            { id: "3695735", nome: "MURILO MIGUEL SCHMITZ", ant: 499, lotacao: "3º CRBM-13º BBM - Santiago" },
-            { id: "3203476", nome: "MARCIANO DA SILVA BUENO", ant: 500, lotacao: "2º CRBM-5° BBM Bento Gonçalves" },
-            { id: "3698750", nome: "JANDER DA SILVA MARQUES", ant: 501, lotacao: "4° CRBM-6º BBM - São Jerônimo" },
-            { id: "3697134", nome: "VICTOR MATHEUS DA GAMA GULARTE", ant: 502, lotacao: "3º CRBM-3º BBM Santa Vitória do Palmar" },
-            { id: "3696367", nome: "VIRGILIO HENRIQUE LUZZI", ant: 503, lotacao: "4º CRBM-6° BBM - Lajeado" },
-            { id: "3698963", nome: "REGIS DUTRA CARDOSO", ant: 504, lotacao: "4° CRBM-12° BBM-Cruz Alta" },
-            { id: "3697320", nome: "WILLIAM RODRIGO SILVA DE OLIVEIRA", ant: 505, lotacao: "3º CRBM-3º BBM - Jaguarão" },
-            { id: "3704343", nome: "JULIANO SOARES SODRE", ant: 510, lotacao: "1º CRBM-EM - Porto Alegre" },
-            { id: "3706028", nome: "ALINE FRANCIELE SCHIEFELBEIN", ant: 511, lotacao: "2º CRBM-2º BBM - Portão" },
-            { id: "3717070", nome: "MAICON OLIVEIRA RIBEIRO", ant: 512, lotacao: "4° CRBM-6° BBM Santa Cruz do Sul" },
-            { id: "4289137", nome: "JAIME JOSE REIS JUNIOR", ant: 514, lotacao: "1º CRBM-9° BBM - Capão da Canoa" },
-            { id: "4289196", nome: "THIAGO DO AMARAL", ant: 515, lotacao: "2º CRBM-2º BBM - Estância Velha" },
-            { id: "4289188", nome: "WAGNER GONÇALVES LIMA", ant: 516, lotacao: "1º CRBM-8° BBM - Sapucaia do Sul" },
-            { id: "4289218", nome: "ALEXANDRE DANIEL SCHRODER", ant: 518, lotacao: "4° CRBM-11° BBM-Giruá" },
-            { id: "4354001", nome: "DOUGLAS MACIEL SILVEIRA", ant: 519, lotacao: "4° CRBM-6° BBM-Santa Cruz do Sul" },
-            { id: "4354427", nome: "DIONATAN MENEN LUIS DA ROSA MACHADO", ant: 520, lotacao: "4° CRBM-4° BBM - Caçapava do Sul" },
-            { id: "4355083", nome: "DAIANE DA SILVEIRA", ant: 521, lotacao: "2º CRBM-2° BBM - Novo Hamburgo" },
-            { id: "4353781", nome: "MARCO AURELIO TOMIELLO ROCHA", ant: 523, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "4354354", nome: "ROGER PIRES DA SILVA", ant: 525, lotacao: "2º CRBM-2º BBM - Estância Velha" },
-            { id: "3715361", nome: "NICOLAS MATOS DIAS DE CASTRO", ant: 526, lotacao: "1º CRBM-9° BBM-Tramandaí" },
-            { id: "4355350", nome: "VINICIUS CARLOS SCHIRMER", ant: 527, lotacao: "2º CRBM-5° BBM - Taquara" },
-            { id: "4354958", nome: "LUCAS CRUMMENAUER", ant: 529, lotacao: "4° CRBM-12° BBM - Panambi" },
-            { id: "3736539", nome: "DOUGLAS FABRICIO SEIBT", ant: 531, lotacao: "4° CRBM-6º BBM - Venâncio Aires" },
-            { id: "4355814", nome: "RAGNER SILVA DOS REIS", ant: 532, lotacao: "2º CRBM-5° BBM - Vacaria" },
-            { id: "4354486", nome: "ITAIRAN DA SILVA QUARESMA", ant: 533, lotacao: "4° CRBM-11° BBM-Giruá" },
-            { id: "4354524", nome: "EBERSON CORREA DA SILVA", ant: 534, lotacao: "4° CRBM-12° BBM Ibirubá" },
-            { id: "4355563", nome: "OLAVIO VALERIO FLESCH GONÇALVES", ant: 536, lotacao: "2º CRBM-2º BBM Novo Hamburgo" },
-            { id: "4354117", nome: "FABRICIO AMORIM MACHADO", ant: 537, lotacao: "1º CRBM-8° BBM Nova Santa Rita" },
-            { id: "4355431", nome: "EMERSON LUIS MAIA DA ROSA", ant: 538, lotacao: "4º CRBM-12° BBM - Cruz Alta" },
-            { id: "4354567", nome: "LEANDRO BAQUES RESTA", ant: 539, lotacao: "2º CRBM-7° BBM Soledade" },
-            { id: "4356039", nome: "CASSIANO DE ALMEIDA FAVA", ant: 540, lotacao: "2º CRBM-7° BBM - Erechim" },
-            { id: "4355237", nome: "JOHN ELVIS NOGUEIRA", ant: 541, lotacao: "2º CRBM-2º BBM - Parobé" },
-            { id: "4354214", nome: "LUIZ ANTONIO AVILA CHAVES", ant: 543, lotacao: "2º CRBM-7° BBM Soledade" },
-            { id: "4355849", nome: "EZEQUIEL DE AVILLA", ant: 544, lotacao: "4° CRBM-4° BBM Santa Maria" },
-            { id: "4354141", nome: "RICARDO ANKLAM", ant: 545, lotacao: "4º CRBM-11º BBM - Santo Angelo" },
-            { id: "4387848", nome: "DIOGO DA SILVA DE OLIVEIRA", ant: 546, lotacao: "2º CRBM-5° BBM-Gramado" },
-            { id: "4388194", nome: "PEDRO GIOVANE CAMARGO MARTINS", ant: 547, lotacao: "4º CRBM-12° BBM - Cruz Alta" },
-            { id: "4388313", nome: "BRUNO PARABONI FIORIN", ant: 548, lotacao: "4° CRBM-4º BBM - Júlio de Castilhos" },
-            { id: "4387880", nome: "ALCIONE SIBULSKI", ant: 551, lotacao: "4° CRBM-11º BBM-Giruá" },
-            { id: "4388429", nome: "MATEUS VINICIUS GOBATTO", ant: 552, lotacao: "2º CRBM-5° BBM Bento Gonçalves" },
-            { id: "4387732", nome: "ADRIEL KAREL PACHECO DE MELLO", ant: 553, lotacao: "2º CRBM-2º BBM - Parobé" },
-            { id: "4387791", nome: "ARTHUR FARIAS MARTINS", ant: 554, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "4395590", nome: "GABRIEL HOCHSCHEIDT", ant: 556, lotacao: "4° CRBM-11º BBM - Três de Maio" },
-            { id: "4395808", nome: "FERNANDO LUCIAN SAUSEN AVILA", ant: 557, lotacao: "2º CRBM-5° BBM Flores da Cunha" },
-            { id: "4395123", nome: "FELIPE PEREIRA DA SILVA", ant: 558, lotacao: "4° CRBM-6° BBM Santa Cruz do Sul" },
-            { id: "4395247", nome: "FRANCISCO DE PAULA COLOMBY SIMOES", ant: 559, lotacao: "4º CRBM-6° BBM - Camaquā" },
-            { id: "4395654", nome: "GENIANE NASCENTE DE OLIVEIRA", ant: 560, lotacao: "4° CRBM-6° BBM-Santa Cruz do Sul" },
-            { id: "4354320", nome: "MAURICIO LEITE DE FARIAS JUNIOR", ant: 562, lotacao: "2º CRBM-2º BBM - Estância Velha" },
-            { id: "4550161", nome: "SAMUEL MATEUS BRENTANO", ant: 566, lotacao: "2º CRBM-2º BBM - Novo Hamburgo" },
-            { id: "4550412", nome: "FELIPE COSTA LOPES", ant: 567, lotacao: "4° CRBM-4º BBM - São Pedro do Sul" },
-            { id: "4550714", nome: "ANTHONY GUTERRES DA SILVA", ant: 568, lotacao: "3º CRBM-3º BBM Pelotas" },
-            { id: "4550277", nome: "RICARDO RAFAEL WERLANG", ant: 571, lotacao: "1º CRBM-EM - Porto Alegre" },
-            { id: "4550730", nome: "TAÍS NAIELE HETTWER", ant: 573, lotacao: "2º CRBM-7º BBM - Passo Fundo" },
-            { id: "4550692", nome: "RICARDO BUENO MION", ant: 574, lotacao: "4º CRBM-11° BBM - Santo Ângelo" },
-            { id: "4550471", nome: "HALLAN LOPES GUEDES", ant: 575, lotacao: "4° CRBM-6° BBM - Lajeado" },
-            { id: "4549724", nome: "DANIEL BRUGNERA ACOSTA", ant: 579, lotacao: "1º CRBM-9° BBM Santo Antônio da Patrulha" },
-            { id: "4549694", nome: "ARCE DE LEÓN BOTELHA GOTTLIEB", ant: 582, lotacao: "2º CRBM-2° BBM - Parobé" },
-            { id: "4549970", nome: "JOHNNY PIRES GODOΥ", ant: 587, lotacao: "2º CRBM-5° BBM - Farroupilha" },
-            { id: "4550145", nome: "JOÃO PEDRO DE MOURA GARCIA SANTELLI", ant: 588, lotacao: "2º CRBM-5° BBMCaxias do Sul" },
-            { id: "4549902", nome: "GILIARDI SANTOS MAZUI", ant: 591, lotacao: "3º CRBM-13° BBM - Alegrete" },
-            { id: "4550463", nome: "HIAGO MALDONADO DA SILVA", ant: 592, lotacao: "3º CRBM-10° BBM-Rosário do Sul" },
-            { id: "4550455", nome: "RODRIGO LOPES BERNARDES", ant: 594, lotacao: "4° CRBM-6º BBM - Vera Cruz" },
-            { id: "4550285", nome: "NATAN RODRIGUES SCIASCIA", ant: 595, lotacao: "4° CRBM-6º BBM Santa Cruz do Sul" },
-            { id: "4550080", nome: "GABRIELA VASCONCELOS PEREIRA", ant: 596, lotacao: "AODC - Porto Alegre" },
-            { id: "4550331", nome: "LEONARDO FUCK DÁVILA", ant: 597, lotacao: "2º CRBM-2º BBM - Campo Bom" },
-            { id: "4550382", nome: "MARIÉLE LEANDRO DE LIMA", ant: 599, lotacao: "3º CRBM-10° BBM - São Gabriel" },
-            { id: "4552334", nome: "MONICA STUKER", ant: 602, lotacao: "AODC - Porto Alegre" },
-            { id: "4552253", nome: "ΕΝΖΟ ΤΕΙΧEIRA MARTINS", ant: 603, lotacao: "2º CRBM-2° BBM - Novo Hamburgo" },
-            { id: "4552342", nome: "VITOR RODRIGUES LEMKE", ant: 604, lotacao: "1º CRBM-8° BBM - Alvorada" },
-            { id: "4595238", nome: "LUCAS MIETLICKI MARTINS", ant: 606, lotacao: "2º CRBM-2º BBM - Parobé" },
-            { id: "4278682", nome: "NAIANY CANABARRO CIELO", ant: 607, lotacao: "1º CRBM-BBS - Porto Alegre" },
-            { id: "4626290", nome: "MAURICIO LOPES DORES", ant: 608, lotacao: "1º CRBM-1º BBM - Porto Alegre" },
-            { id: "4626036", nome: "GABRIEL ANDRE SCHEIN", ant: 610, lotacao: "2º CRBM-5° BBM - Farroupilha" },
-            { id: "4626680", nome: "THOMAZ LUIZ PIMENTEL", ant: 611, lotacao: "4° CRBM-12° BBM Ibirubá" },
-            { id: "4625617", nome: "JONATAS HOEFLING DIAS", ant: 612, lotacao: "2º CRBM-5° BBM - Farroupilha" },
-            { id: "4625552", nome: "MORGANA FATIMA PEREIRA", ant: 613, lotacao: "4° CRBM-11º BBM-Horizontina" },
-            { id: "4627059", nome: "DANUSA MUNARI FERENZ", ant: 614, lotacao: "2º CRBM-7° BBM - Erechim" },
-            { id: "4625986", nome: "IZELEO DE PELLEGRIN JUNIOR", ant: 615, lotacao: "4° CRBM -6° BBM - Taquari" },
-            { id: "4626540", nome: "BRUNO COPPETTI PERLIN", ant: 616, lotacao: "4º CRBM-11° BBM - Santo Ângelo" },
-            { id: "4625650", nome: "STEVEN VAN HATTEM", ant: 617, lotacao: "2º CRBM-2º BBM - Dois Irmãos" },
-            { id: "4625480", nome: "PETERSON LUIS WOLF", ant: 618, lotacao: "1º CRBM-8° BBM - Sapucaia do Sul" },
-            { id: "4626478", nome: "WESLEY TREVISOL MANICA", ant: 620, lotacao: "4° CRBM-6° BBM - Lajeado" },
-            { id: "4625749", nome: "RAFAEL ZANCHETTIN", ant: 621, lotacao: "2º CRBM-5° BBM - Flores da Cunha" },
-            { id: "4625536", nome: "FELIPE VOLKWEIS", ant: 622, lotacao: "2º CRBM-2º BBM - Dois Irmãos" },
-            { id: "4626052", nome: "LEONARDO ZILIO", ant: 623, lotacao: "2º CRBM-7° BBM - Guaporé" },
-            { id: "4626419", nome: "ADAUTO CESAR ACUNHA SARAIVA", ant: 625, lotacao: "4º CRBM-4° BBM - São Sepé" },
-        ];
+        const SARGENTOS_DATA = [{"id": "2889765", "ant": 188, "nome": "LEANDRO FARIA SANTOS DA COSTA", "lotacao": "3º BBM - Jaguarão"}, {"id": "2885271", "ant": 191, "nome": "GLAUBER FANTINEL D AVILA", "lotacao": "11º BBM - São Luiz Gonzaga"}, {"id": "2314738", "ant": 349, "nome": "LEONARDO BERTELLI", "lotacao": "5º BBM - Caxias do Sul"}, {"id": "2329204", "ant": 352, "nome": "MARCOS AURÉLIO LONGONI ANDRADE", "lotacao": "13º BBM - Itaqui"}, {"id": "2388120", "ant": 353, "nome": "HEMERSON JOSIAS DA SILVA FERREIRA", "lotacao": "3º BBM - Santa Vitória do Palmar"}, {"id": "2414210", "ant": 354, "nome": "MOISÉS RODRIGUES VARGAS", "lotacao": "5º BBM - Gramado"}, {"id": "2414376", "ant": 355, "nome": "SANDRO JORGE CARVALHO CONCEIÇÃO", "lotacao": "9º BBM - Torres"}, {"id": "2425955", "ant": 356, "nome": "CRISTIANO MARCELO PEREIRA", "lotacao": "12º BBM - São Pedro do Sul"}, {"id": "2414155", "ant": 357, "nome": "CLÁUDIO CRISTIANO MOREIRA PAIM", "lotacao": "5º BBM - Vacaria"}, {"id": "2427672", "ant": 358, "nome": "MARCO AURÉLIO ALVES", "lotacao": "9º BBM - Tramandaí"}, {"id": "2520184", "ant": 359, "nome": "PAULO DANIEL ROGOVSCHI JUNIOR", "lotacao": "1º CRBM - Porto Alegre"}, {"id": "2519720", "ant": 360, "nome": "BEN-HUR COSTA CUSTODIO", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2329158", "ant": 361, "nome": "JORGE ALEXANDRE OLIVEIRA DE CASTRO", "lotacao": "6º BBM - Rio Pardo"}, {"id": "2450895", "ant": 362, "nome": "CLAUDIOMAR DE SOUZA MELLO", "lotacao": "4º BBM - Santa Maria"}, {"id": "2612836", "ant": 363, "nome": "PAULO FERNANDO SARAIVA MOSCOPE", "lotacao": "DA/DLP - Porto Alegre"}, {"id": "2460394", "ant": 364, "nome": "RODRIGO MARTINS", "lotacao": "7º BBM - Passo Fundo"}, {"id": "2613581", "ant": 365, "nome": "SILVIO NEI FERREIRA PEREIRA", "lotacao": "10º BBM - Dom Pedrito"}, {"id": "2450879", "ant": 366, "nome": "PAULO ROBERTO SANTIAGO DIAS", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "2694913", "ant": 367, "nome": "PAULO CESAR FOLETTO", "lotacao": "6º BBM - Venâncio Aires"}, {"id": "2685159", "ant": 368, "nome": "DANIELA SCHVINDT", "lotacao": "5º BBM - Caxias do Sul"}, {"id": "2477343", "ant": 369, "nome": "CARLOS EDUARDO VARGAS DA SILVA", "lotacao": "2º BBM - Sapiranga"}, {"id": "2496224", "ant": 370, "nome": "LUCIANA SOARES SEBASTIÃO", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2694085", "ant": 371, "nome": "SOLANGE JACOBSEN", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "2495902", "ant": 372, "nome": "ADRIANO MENDONÇA DE OLIVEIRA", "lotacao": "11º BBM - Santo Ângelo"}, {"id": "2681773", "ant": 373, "nome": "RICARDO RODRIGUES MARTINS", "lotacao": "13º BBM - Uruguaiana"}, {"id": "2682427", "ant": 374, "nome": "ROBERTA APARECIDA GIACOMINI", "lotacao": "nan nan"}, {"id": "2684527", "ant": 375, "nome": "IURA CASARIN", "lotacao": "11º BBM - Giruá"}, {"id": "2492695", "ant": 376, "nome": "ALEXANDRE SILVA DA ROCHA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2492571", "ant": 377, "nome": "VALMIR JOSE COSTA DOS SANTOS", "lotacao": "12º BBM - Ijuí"}, {"id": "2492563", "ant": 379, "nome": "TIAGO SANTOS DE BARCELLOS", "lotacao": "CCB - Porto Alegre"}, {"id": "2693836", "ant": 380, "nome": "JASSON SOUZA DA ROSA", "lotacao": "6º BBM - São Lourenço do Sul"}, {"id": "2684675", "ant": 381, "nome": "VALDEMIR SAGAS NUNES", "lotacao": "13º BBM - Santiago"}, {"id": "2492555", "ant": 382, "nome": "SIMONE BEATRIZ CARPES CHAVES", "lotacao": "CCB - Porto Alegre"}, {"id": "2686031", "ant": 383, "nome": "FABIO ADRIANO DA SILVA ALMEIDA", "lotacao": "3º BBM - Camaquã"}, {"id": "2693992", "ant": 384, "nome": "MARCIO LUIZ RODRIGUES", "lotacao": "6º BBM - Venâncio Aires"}, {"id": "2693950", "ant": 385, "nome": "LUCIANO BOAZ OLIVEIRA", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "2684748", "ant": 386, "nome": "LUCIANO ROBERTO WEISS", "lotacao": "6º BBM - Lajeado"}, {"id": "2466031", "ant": 387, "nome": "JOELSON LOPES DE OLIVEIRA", "lotacao": "CCB - Porto Alegre"}, {"id": "2681323", "ant": 388, "nome": "LUIS ANDRÉ GONÇALVES MACHADO", "lotacao": "13º BBM - São Borja"}, {"id": "2684730", "ant": 389, "nome": "PAULO VALMIR RODRIGUES SEVERO", "lotacao": "6º BBM - Taquari"}, {"id": "2681595", "ant": 390, "nome": "FABRICIO FLORES PEDROSO", "lotacao": "10º BBM - Quaraí"}, {"id": "2681552", "ant": 392, "nome": "ANDRE LUIS DE SOUZA SOARES", "lotacao": "10º BBM - Santana do Livramento"}, {"id": "2682915", "ant": 393, "nome": "GIOVANE RAFAEL LUZ ALVES", "lotacao": "9º BBM - Cidreira"}, {"id": "2683938", "ant": 394, "nome": "CRISTIANO KUNRATH", "lotacao": "8º BBM - Esteio"}, {"id": "2684330", "ant": 395, "nome": "EDSON SILVA DE ALMEIDA", "lotacao": "11º BBM - Horizontina"}, {"id": "2684399", "ant": 396, "nome": "ADRIANO CESAR ANTUNES DOS SANTOS", "lotacao": "7º BBM - Passo Fundo"}, {"id": "2684942", "ant": 397, "nome": "FABIANO ZANARDI", "lotacao": "7º BBM - Erechim"}, {"id": "2682958", "ant": 398, "nome": "JONAS DE SOUZA PACHECO", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2693585", "ant": 399, "nome": "ANDERSON LUIS CHAVES", "lotacao": "8º BBM - Canoas"}, {"id": "2683075", "ant": 400, "nome": "JULIO CESAR DA SILVA LOPES", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2683105", "ant": 401, "nome": "LEANDRO MUGICA DIAS", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2681951", "ant": 402, "nome": "ALEXANDRE RODRIGUES FERREIRA", "lotacao": "8º BBM - Cachoeirinha"}, {"id": "2684497", "ant": 403, "nome": "GLEBER JOSOE RIBAS", "lotacao": "11º BBM - Santo Ângelo"}, {"id": "2682885", "ant": 404, "nome": "FABIO CASTRO DA SILVA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2682257", "ant": 405, "nome": "LUIS CARLOS DO AMARAL", "lotacao": "8º BBM - Canoas"}, {"id": "2683440", "ant": 406, "nome": "RODRIGO TEIXEIRA VARGAS", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2681528", "ant": 407, "nome": "ADEMAR RODRIGUES FLORES", "lotacao": "4º BBM - Santa Maria"}, {"id": "2682702", "ant": 408, "nome": "CRISTIANO DUTRA SOUZA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2684802", "ant": 409, "nome": "MARCELO SILVA DE MOURA", "lotacao": "6º BBM - Lajeado"}, {"id": "3695263", "ant": 410, "nome": "ADRIANO ZANON", "lotacao": "8º BBM - Gravataí"}, {"id": "3204316", "ant": 411, "nome": "SILVANO MELO MOTTA", "lotacao": "10º BBM - Dom Pedrito"}, {"id": "3694976", "ant": 412, "nome": "WAGNER DEBONI", "lotacao": "9º BBM - Torres"}, {"id": "3699480", "ant": 413, "nome": "LEONARDO SAIDELLES DE FIGUEIREDO", "lotacao": "4º BBM - Santa Maria"}, {"id": "2683342", "ant": 414, "nome": "PAULO CESAR BARCELLOS RODRIGUES", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2683296", "ant": 415, "nome": "MARCIO FABIANO SILVA OLIVEIRA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2682729", "ant": 416, "nome": "DANIEL DOS SANTOS MEIRELLES", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2683695", "ant": 417, "nome": "VOLMIR DA SILVA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2683504", "ant": 418, "nome": "SEVERO DO NASCIMENTO E SILVA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "3697185", "ant": 419, "nome": "GREGORI SOARES BRUM", "lotacao": "7º BBM - Erechim"}, {"id": "3698645", "ant": 420, "nome": "FELIPE EDUARDO CARPES DE MORAES", "lotacao": "7º BBM - Erechim"}, {"id": "3698068", "ant": 421, "nome": "ANDERSON THOMAZ DOS SANTOS", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "3697010", "ant": 422, "nome": "MATEUS DO AMARAL", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "3696731", "ant": 423, "nome": "MORGANA PIRES KOELZER FALLER", "lotacao": "6º BBM - Santa Cruz do Sul"}, {"id": "2683679", "ant": 424, "nome": "VILMAR MACHADO BRAGA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2681587", "ant": 425, "nome": "CRISTIANO MOURA TRINDADE", "lotacao": "4º BBM - Santa Maria"}, {"id": "3699269", "ant": 426, "nome": "WILLIAM RICARDO SCHIRMANN", "lotacao": "2º BBM - Novo Hamburgo"}, {"id": "2683032", "ant": 427, "nome": "JOSE RICARDO DA SILVA COSTA", "lotacao": "1º BBM - Porto Alegre"}, {"id": "2683520", "ant": 428, "nome": "SIDNEI LUIS MENDES", "lotacao": "1º BBM - Porto Alegre"}, {"id": "3526429", "ant": 429, "nome": "PEDRO AMARO ALCANTARA", "lotacao": "3º BBM - Pelotas"}];
 
-        // --- CONFIGURAÇÃO FIREBASE (GITHUB PAGES) ---
+        // --- CONFIGURAÇÃO FIREBASE ---
         const firebaseConfig = {
-            apiKey: "AIzaSyAimXQSU5WX69hoEk02l4Q4YeQ-vMCi2xY",
-            authDomain: "vagas-ctsp-2026.firebaseapp.com",
-            projectId: "vagas-ctsp-2026",
-            storageBucket: "vagas-ctsp-2026.firebasestorage.app",
-            messagingSenderId: "336019414677",
-            appId: "1:336019414677:web:45726517bcd4b82077859c"
+            apiKey: "AIzaSyCB_7DEXcavNZH6Cm55OspemDjakxLF1Y8",
+            authDomain: "vagas-1sgt.firebaseapp.com",
+            projectId: "vagas-1sgt",
+            storageBucket: "vagas-1sgt.firebasestorage.app",
+            messagingSenderId: "70468153825",
+            appId: "1:70468153825:web:9ac4b550fbb0ff0cb9e2a0"
         };
         
-        let appId = 'cbmrs-movimentacao-2026';
-
-        try {
-            if (typeof window.__firebase_config !== 'undefined') {
-                firebaseConfig = JSON.parse(window.__firebase_config);
-                appId = window.__app_id || appId;
-            }
-        } catch (e) { console.error("Erro ao ler config:", e); }
+        let appId = 'vagas-1sgt';
 
         const ConfigWarning = () => (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 text-white p-8">
@@ -430,14 +188,12 @@
             // Lista de Excedentes (Quem escolheu mas está fora das vagas)
             const excedentesList = useMemo(() => {
                 let excedentes = [];
-                // Agrupar por cidade
                 const cityGroups = {};
                 allSelections.forEach(sel => {
                     if (!cityGroups[sel.cidade]) cityGroups[sel.cidade] = [];
                     cityGroups[sel.cidade].push(sel);
                 });
 
-                // Verificar em cada cidade
                 Object.keys(cityGroups).forEach(cidade => {
                     if (cidade === "Não irei escolher") return;
                     const vagaInfo = VAGAS_DATA.find(v => v.cidade === cidade);
@@ -445,7 +201,6 @@
                     
                     const inscritos = cityGroups[cidade].sort((a,b) => a.antiguidade - b.antiguidade);
                     if (inscritos.length > vagaInfo.vagas) {
-                        // Pegar os que estão depois do limite de vagas
                         const fora = inscritos.slice(vagaInfo.vagas);
                         excedentes = [...excedentes, ...fora];
                     }
@@ -472,7 +227,7 @@
                             <div className="text-center mb-8">
                                 <div className="bg-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"><Icon name="user" className="text-white" /></div>
                                 <h1 className="text-2xl font-bold text-gray-800">Sistema de Movimentação</h1>
-                                <p className="text-gray-500">Acesso por Antiguidade</p>
+                                <p className="text-gray-500">Acesso por Antiguidade (Lista Nova)</p>
                             </div>
                             <div className="space-y-4">
                                 <div className="relative">
@@ -584,15 +339,17 @@
                                 {showPending && (
                                     <div className="mb-4 border-t border-gray-100 pt-4">
                                         <h3 className="text-sm font-bold text-gray-700 mb-2">Quem ainda não preencheu:</h3>
-                                        <div className="max-h-60 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div className="max-h-40 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-2">
                                             {pendingList.map(p => (
-                                                <div key={p.id} className="text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100 flex flex-col justify-center">
-                                                    <div>
-                                                        <span className="font-bold text-gray-800 mr-2">{p.ant}</span> 
-                                                        <span className="font-medium">{p.nome}</span>
+                                                <div key={p.id} className="text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <span className="font-bold text-gray-800 mr-2">{p.ant}</span> 
+                                                            <span className="font-medium">{p.nome}</span>
+                                                        </div>
                                                     </div>
-                                                    <div className="text-[10px] text-gray-400 mt-1 italic pl-6 flex items-center">
-                                                        <span className="mr-1">📍</span> {p.lotacao}
+                                                    <div className="text-[10px] text-gray-400 mt-1 italic pl-6">
+                                                        {p.lotacao}
                                                     </div>
                                                 </div>
                                             ))}
